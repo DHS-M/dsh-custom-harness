@@ -1,0 +1,7 @@
+{
+  "name": "@custom/llm-opencode",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "index.js",
+  "exports": { ".": "./index.js", "./package.json": "./package.json" }
+}
