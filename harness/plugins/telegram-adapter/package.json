@@ -1,0 +1,9 @@
+{
+  "name": "@custom/telegram-adapter",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "main": "index.mjs",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node index.mjs" }
+}
