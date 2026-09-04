@@ -1,5 +1,5 @@
 {
-  "$schema_comment": "DHS-M builtin plugins shipped with dsh-m-install. enabled:false keeps code in tree but not linked.",
+  "$schema_comment": "DHS-M builtin plugins. enabled:false keeps code in tree but not linked at install.",
   "product": "dsh-m",
   "plugins": [
     {
@@ -9,10 +9,16 @@
       "role": "default free LLM provider (OpenCode Zen)"
     },
     {
+      "name": "websearch-opencode",
+      "package": "@custom/websearch-opencode",
+      "enabled": true,
+      "role": "OpenCode-compatible websearch via Exa/Parallel MCP (replaces DeepSeek-only search)"
+    },
+    {
       "name": "web-search-pi",
       "package": "@custom/web-search-pi",
-      "enabled": true,
-      "role": "web search without DeepSeek-only dependency"
+      "enabled": false,
+      "role": "legacy stub — prefer websearch-opencode"
     },
     {
       "name": "telegram-settings",
@@ -24,11 +30,7 @@
       "name": "telegram-adapter",
       "package": "@custom/telegram-adapter",
       "enabled": false,
-      "role": "Optional sidecar bot — not a Cordis web plugin; run separately when ready"
+      "role": "Optional sidecar bot — not a Cordis web plugin"
     }
-  ],
-  "removed_or_not_builtin": [
-    "settings-ui (experimental, not maintained as builtin)",
-    "official deepseek provider stays in upstream but disabled by install patch"
   ]
 }

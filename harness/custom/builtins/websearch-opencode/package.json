@@ -1,0 +1,12 @@
+{
+  "name": "@custom/websearch-opencode",
+  "version": "0.1.0",
+  "description": "OpenCode-compatible websearch for dsh-m (Exa MCP primary, Parallel MCP fallback)",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./search": "./search.js",
+    "./package.json": "./package.json"
+  }
+}
