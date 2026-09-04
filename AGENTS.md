@@ -1,26 +1,33 @@
-# Agent contribution guide (DHS-M)
+# Agent contribution guide (dsh-m)
 
-## Layout (do not invert)
+## Product model
 
-- **`harness/src`** — upstream DeepSeek Harness (clone). Keep its READMEs.
-- **`harness/custom`** — our plugins/scripts only.
-- **`contributors/`** — `PROTOCOL.md`, `CHANGELOG.md`, `docs/changes/`, `logs/`.
+We ship **dsh-m**: stock `@deepseek-ai/dsh` + **install-time** patch + **builtin** plugins under `harness/custom/builtins/`.
+
+We are **not** (yet) maintaining a full upstream source fork unless a change requires it. Prefer:
+
+1. Builtin plugin in `harness/custom/builtins/<name>/`
+2. Register in `builtins/manifest.json`
+3. Wire in `install/dsh-m-install.sh` / patch scripts if cordis profile needs it
+
+## Layout
+
+| Path | Role |
+|------|------|
+| `install/` | `dsh-m-install.sh`, `dsh-m-start.sh` |
+| `harness/custom/builtins/` | First-party plugins + `manifest.json` |
+| `harness/custom/scripts/` | Install-time patches (trust-all, provider defaults) |
+| `harness/src/` | Optional upstream clone |
+| `contributors/` | PROTOCOL, CHANGELOG, `docs/changes/`, logs |
 
 ## Before work
 
-1. Ensure `harness/src` exists (`bash harness/bootstrap-upstream.sh` if not).
-2. Read `contributors/PROTOCOL.md` and the latest `contributors/docs/changes/*`.
-3. Read the latest `contributors/logs/*`.
+1. Branch from `feat/dsh-m-install-and-builtins` or `main` as directed.
+2. Read latest `contributors/docs/changes/` and `contributors/logs/`.
+3. Do **not** put process docs under `harness/`.
 
 ## After work
 
-1. Code under `harness/custom/` (or intentional upstream edits in `harness/src` with clear notes).
-2. Add `contributors/docs/changes/NNN-slug.md`.
-3. Add `contributors/logs/YYYY-MM-DD-….md`.
-4. Bump `contributors/CHANGELOG.md` if user-facing.
-
-## Cloud rules
-
-- Volume paths: `DSH_HOME=/data/dsh`, workspace `/data/workspace`, `HOME=/data/home`
-- Client plugin inject = Cordis service names (`slots`), not package ids
-- No secrets in git
+1. Code under `harness/custom/` or `install/`.
+2. `contributors/docs/changes/NNN-….md` + `contributors/logs/…`.
+3. Prefer patch **at install**, not every `dsh-m-start`.

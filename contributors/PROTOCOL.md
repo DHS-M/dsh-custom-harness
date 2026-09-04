@@ -1,9 +1,9 @@
-# Protocol
+# Protocol (dsh-m)
 
-1. Every core change gets `contributors/docs/changes/NNN-slug.md` (problem, solution, reasoning, verify).
-2. Custom product code lives under `harness/custom/` (plugins, deploy scripts).
-3. Upstream DeepSeek Harness lives under `harness/src/` (clone of deepseek-ai/deepseek-harness).
-4. Cloud assumes volume `/data` and trust-all public URL behavior.
-5. Agents follow root `AGENTS.md` and log work under `contributors/logs/`.
-6. Default model provider is `llm-opencode`; official DeepSeek stays disabled unless the user enables it.
-7. Cordis client plugins inject service names (e.g. `slots`), never npm package IDs.
+1. Change narratives: `contributors/docs/changes/NNN-slug.md` only.
+2. Builtin plugins: `harness/custom/builtins/` + `manifest.json` (`enabled` true/false).
+3. Install path: `install/dsh-m-install.sh` (npm + patch once + link builtins).
+4. Start path: `install/dsh-m-start.sh` (no re-patch).
+5. Cloud: volume `/data`, `DSH_HOME=/data/dsh`, workspace `/data/workspace`, `HOME=/data/home`.
+6. Default model: `llm-opencode`; official DeepSeek provider disabled by install patch unless user turns it on.
+7. Client Cordis inject uses **service names** (e.g. `slots`), not package ids.
