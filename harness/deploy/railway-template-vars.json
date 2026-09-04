@@ -1,0 +1,40 @@
+{
+  "service": "dsh-web",
+  "variables": {
+    "DSH_HOME": {
+      "description": "DeepSeek Harness home for sessions, profiles, and settings. Must be on the attached volume.",
+      "isOptional": false,
+      "defaultValue": "/data/dsh"
+    },
+    "DSH_WORKSPACE": {
+      "description": "Default session workspace for agent file work. Must be on the attached volume.",
+      "isOptional": false,
+      "defaultValue": "/data/workspace"
+    },
+    "HOME": {
+      "description": "Process HOME so agent tools write under the volume instead of /root.",
+      "isOptional": false,
+      "defaultValue": "/data/home"
+    },
+    "OPENCODE_PUBLIC_KEY": {
+      "description": "OpenCode Zen API key. Use the literal value public for free keyless models.",
+      "isOptional": true,
+      "defaultValue": "public"
+    },
+    "NODE_OPTIONS": {
+      "description": "Node.js heap limit for DSH (keep capped on small memory plans).",
+      "isOptional": true,
+      "defaultValue": "--max-old-space-size=850"
+    },
+    "TELEGRAM_BOT_TOKEN": {
+      "description": "Optional Telegram BotFather token for the bot sidecar. Leave empty if unused.",
+      "isOptional": true,
+      "defaultValue": ""
+    },
+    "DSH_TRUST_ALL": {
+      "description": "Treat public service URLs as trusted so the full web UI works outside localhost.",
+      "isOptional": true,
+      "defaultValue": "1"
+    }
+  }
+}

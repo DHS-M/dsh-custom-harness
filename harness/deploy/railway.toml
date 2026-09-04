@@ -1,0 +1,11 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "bash scripts/railway-start.sh"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+# Attach a volume with mount path /data in the Railway dashboard.
+# Recommended env: DSH_HOME=/data/dsh DSH_WORKSPACE=/data/workspace HOME=/data/home
+# OPENCODE_PUBLIC_KEY=public NODE_OPTIONS=--max-old-space-size=850

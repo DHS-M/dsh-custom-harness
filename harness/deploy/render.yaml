@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: dsh-web
+    runtime: node
+    plan: starter
+    region: oregon
+    autoDeploy: false
+    buildCommand: |
+      npm install -g @deepseek-ai/dsh@0.1.1-rc.2
+    startCommand: bash scripts/render-start.sh
+    healthCheckPath: /
+    envVars:
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=850
+      - key: OPENCODE_PUBLIC_KEY
+        value: public
+      - key: DSH_HOME
+        value: /data/dsh
+      - key: DSH_WORKSPACE
+        value: /data/workspace
+      - key: HOME
+        value: /data/home
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+    disk:
+      name: dsh-data
+      mountPath: /data
+      sizeGB: 2
