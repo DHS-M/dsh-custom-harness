@@ -1,41 +1,35 @@
-# DHS-M · DeepSeek Harness (custom)
+# DHS-M · dsh-m
 
-Organization workspace around a **real DeepSeek Harness tree** plus DHS-M cloud customizations.
+Our product is **dsh-m**: DeepSeek Harness with DHS-M builtins, install script, and cloud defaults.
+
+Branch `feat/dsh-m-install-and-builtins` implements the install path (this work).
 
 ## Layout
 
 ```text
-.
-├── README.md
-├── AGENTS.md                 ← agents must read this
-├── CONTRIBUTING.md
-├── harness/
-│   ├── src/                  ← upstream clone (submodule / bootstrap-upstream.sh)
-│   ├── custom/               ← our plugins, scripts, deploy
-│   ├── bootstrap-upstream.sh
-│   └── README.md
-└── contributors/             ← PROTOCOL, CHANGELOG, change docs, work logs
-    ├── PROTOCOL.md
-    ├── CHANGELOG.md
-    ├── docs/changes/
-    └── logs/
+install/                    ← dsh-m-install.sh, dsh-m-start.sh
+harness/
+  src/                      ← optional upstream clone (bootstrap)
+  custom/
+    builtins/               ← first-party plugins + manifest.json
+    scripts/                ← trust-all patch (runs at install, not every start)
+    deploy/                 ← railway / render
+contributors/               ← PROTOCOL, CHANGELOG, docs/changes, logs
 ```
 
-| Path | Purpose |
-|------|---------|
-| `harness/src` | Upstream [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) |
-| `harness/custom` | DHS-M plugins and deploy |
-| `contributors` | How we work, what changed, who did it |
-
-## First-time setup
+## Install & run
 
 ```bash
-git clone --recurse-submodules https://github.com/DHS-M/dsh-custom-harness.git
-cd dsh-custom-harness
-# if src empty:
-bash harness/bootstrap-upstream.sh
+bash install/dsh-m-install.sh
+bash install/dsh-m-start.sh
 ```
+
+Cloud: set volume at `/data`, `DSH_HOME=/data/dsh`, then the same install + start.
+
+## Builtins
+
+See `harness/custom/builtins/manifest.json`. Enable/disable without deleting code.
 
 ## Agents
 
-Read **[AGENTS.md](./AGENTS.md)**. History and protocol are under **`contributors/`**, not `harness/`.
+Read **AGENTS.md**. Write history only under **contributors/**.
