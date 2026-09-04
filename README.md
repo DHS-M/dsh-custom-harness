@@ -1,34 +1,41 @@
 # DHS-M · DeepSeek Harness (custom)
 
-Organization workspace for a **cloud-ready** customization of [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness): public URLs, free OpenCode models, Telegram, volume persistence, and multi-agent collaboration.
+Organization workspace around a **real DeepSeek Harness tree** plus DHS-M cloud customizations.
 
 ## Layout
 
 ```text
 .
-├── README.md                 ← you are here
-├── AGENTS.md                 ← how coding agents must contribute
-├── CONTRIBUTING.md           ← humans + process overview
-├── harness/                  ← product code, scripts, change narratives
-└── contributors/             ← who did what (agents + humans)
+├── README.md
+├── AGENTS.md                 ← agents must read this
+├── CONTRIBUTING.md
+├── harness/
+│   ├── src/                  ← upstream clone (submodule / bootstrap-upstream.sh)
+│   ├── custom/               ← our plugins, scripts, deploy
+│   ├── bootstrap-upstream.sh
+│   └── README.md
+└── contributors/             ← PROTOCOL, CHANGELOG, change docs, work logs
+    ├── PROTOCOL.md
+    ├── CHANGELOG.md
+    ├── docs/changes/
+    └── logs/
 ```
 
 | Path | Purpose |
 |------|---------|
-| [`harness/`](./harness/) | Source of truth: plugins, deploy scripts, protocol, change log |
-| [`contributors/`](./contributors/) | Work logs so the next agent can continue |
+| `harness/src` | Upstream [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) |
+| `harness/custom` | DHS-M plugins and deploy |
+| `contributors` | How we work, what changed, who did it |
 
-## Quick start (agents)
+## First-time setup
 
-1. Read **[`AGENTS.md`](./AGENTS.md)** end-to-end.
-2. Read **[`harness/PROTOCOL.md`](./harness/PROTOCOL.md)** and the latest files under `harness/docs/changes/`.
-3. Read the newest entry in **`contributors/logs/`**.
-4. Implement in `harness/`, write a change narrative, append a contributor log, push.
+```bash
+git clone --recurse-submodules https://github.com/DHS-M/dsh-custom-harness.git
+cd dsh-custom-harness
+# if src empty:
+bash harness/bootstrap-upstream.sh
+```
 
-## Deploy
+## Agents
 
-See [`harness/README.md`](./harness/README.md). Always mount durable storage at **`/data`**.
-
-## License
-
-Custom plugins and scripts in this repo are for DHS-M collaboration. Upstream `@deepseek-ai/dsh` remains under its own license.
+Read **[AGENTS.md](./AGENTS.md)**. History and protocol are under **`contributors/`**, not `harness/`.

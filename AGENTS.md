@@ -1,66 +1,26 @@
 # Agent contribution guide (DHS-M)
 
-Mandatory for any coding agent working on this repository. Follow it so another agent can continue without re-discovering context.
+## Layout (do not invert)
 
-## 1. Scope
+- **`harness/src`** — upstream DeepSeek Harness (clone). Keep its READMEs.
+- **`harness/custom`** — our plugins/scripts only.
+- **`contributors/`** — `PROTOCOL.md`, `CHANGELOG.md`, `docs/changes/`, `logs/`.
 
-| Area | Location |
-|------|----------|
-| Product code & deploy | `harness/` |
-| Narrative of our changes | `harness/docs/changes/NNN-slug.md` |
-| Protocol | `harness/PROTOCOL.md` |
-| Who did what | `contributors/logs/` |
+## Before work
 
-Do **not** leave one-off notes only in chat. Persist under `contributors/logs/` or a numbered change doc.
+1. Ensure `harness/src` exists (`bash harness/bootstrap-upstream.sh` if not).
+2. Read `contributors/PROTOCOL.md` and the latest `contributors/docs/changes/*`.
+3. Read the latest `contributors/logs/*`.
 
-## 2. Before you change anything
+## After work
 
-1. Read latest `main`.
-2. Skim `harness/PROTOCOL.md`.
-3. Read the **last 3** files in `harness/docs/changes/` (highest numbers).
-4. Read the **latest** `contributors/logs/*.md`.
-5. If the task touches Railway/cloud: read `harness/docs/changes/007-*`, `010-*`, and `harness/deploy/`.
+1. Code under `harness/custom/` (or intentional upstream edits in `harness/src` with clear notes).
+2. Add `contributors/docs/changes/NNN-slug.md`.
+3. Add `contributors/logs/YYYY-MM-DD-….md`.
+4. Bump `contributors/CHANGELOG.md` if user-facing.
 
-## 3. How to implement
+## Cloud rules
 
-1. Prefer editing under `harness/plugins/` and `harness/scripts/`.
-2. Runtime installs stock `@deepseek-ai/dsh`; we **patch + inject** `@custom/*` plugins at start.
-3. Paths on cloud **must** use the volume:
-   - `DSH_HOME=/data/dsh`
-   - `DSH_WORKSPACE=/data/workspace`
-   - `HOME=/data/home`
-4. Cordis **client** plugins inject **service names** (e.g. `slots`), never npm package ids.
-5. Do not re-enable official DeepSeek provider by default; default model stays `llm-opencode`.
-6. Do not add password/auth layers unless explicitly requested (trust-all cloud design).
-
-## 4. After every meaningful change
-
-1. Add `harness/docs/changes/NNN-short-slug.md` with Problem, Solution, reasoning, Files, Verify.
-2. Append `contributors/logs/YYYY-MM-DD-agent-short-slug.md` using `contributors/TEMPLATE.md`.
-3. Update `harness/CHANGELOG.md` one bullet if user-facing.
-4. Push to `main` (or open a PR if required).
-
-## 5. Continuity packet
-
-```text
-Repo: DHS-M/dsh-custom-harness
-Last change doc: harness/docs/changes/NNN-...
-Last contributor log: contributors/logs/...
-Open risks: (list)
-Blocked on: (tokens, volume, etc.)
-```
-
-## 6. Forbidden
-
-- Committing secrets (tokens, bot keys).
-- Durable state under `/app`, `/root`, or outside `/data` on cloud.
-- Breaking ModuleLoader client bundles with bad regex patches.
-- Claiming work in chat without a contributor log.
-
-## 7. Verification checklist (cloud)
-
-- [ ] HTTP 200 on service URL
-- [ ] `host.describe` → home `/data/home`, cwd `/data/workspace`
-- [ ] Models list includes `llm-opencode`
-- [ ] No Failed to load plugins for `@custom/*`
-- [ ] Settings → Telegram loads (if enabled)
+- Volume paths: `DSH_HOME=/data/dsh`, workspace `/data/workspace`, `HOME=/data/home`
+- Client plugin inject = Cordis service names (`slots`), not package ids
+- No secrets in git

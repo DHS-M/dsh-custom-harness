@@ -1,34 +1,24 @@
-# harness — product tree
+# harness
 
-Cloud-ready DeepSeek Harness customization: plugins, start scripts, deploy blueprints, and change narratives.
+Two layers:
 
-## Contents
-
-| Path | Role |
+| Path | What |
 |------|------|
-| `plugins/` | `@custom/llm-opencode`, `web-search-pi`, `telegram-settings`, `telegram-adapter`, `settings-ui` |
-| `scripts/` | `railway-start.sh`, `render-start.sh`, trust-all helpers |
-| `deploy/` | `railway.toml`, `render.yaml`, template vars |
-| `docs/changes/` | Numbered problem→solution narratives |
-| `PROTOCOL.md` | How we customize |
+| **`src/`** | Full **DeepSeek Harness** upstream (clone / submodule of [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)) |
+| **`custom/`** | DHS-M overlays: plugins, start scripts, deploy blueprints |
 
-## Deploy
+Upstream READMEs and license stay inside `src/` once bootstrapped — do not delete them.
 
-### Railway
-- Start: `bash scripts/railway-start.sh` (see `deploy/railway.toml`)
-- Volume: **`/data`**
-- Template descriptions: `deploy/railway-template-vars.json`
+## Bootstrap upstream
 
-### Render
-- Blueprint: `deploy/render.yaml`
-- Start: `bash scripts/render-start.sh`
+```bash
+bash harness/bootstrap-upstream.sh
+```
 
-## Persistence
+Clones `deepseek-ai/deepseek-harness` into `harness/src` and removes bulky unused paths. Essential READMEs, `packages/`, `apps/`, `scripts/`, and license files are kept.
 
-| Env | Path |
-|-----|------|
-| `DSH_HOME` | `/data/dsh` |
-| `DSH_WORKSPACE` | `/data/workspace` |
-| `HOME` | `/data/home` |
+## Custom plugins
 
-Default model provider: **`llm-opencode`**.
+See `custom/plugins/`.
+
+Collaboration history (PROTOCOL, CHANGELOG, change narratives) lives in **`../contributors/`**, not here.
